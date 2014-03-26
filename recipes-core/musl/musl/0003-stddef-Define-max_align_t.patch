@@ -1,0 +1,31 @@
+From 3230a19f858a49396ebaa2a948e1a1c357341ae2 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Wed, 26 Mar 2014 14:28:21 -0700
+Subject: [PATCH 3/3] stddef: Define max_align_t
+
+c++11 defines is and libstdc++ from gcc 4.9 now needs it
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+Upstream-Status: Pending
+---
+ include/stddef.h |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/stddef.h b/include/stddef.h
+index 0a32919..788227a 100644
+--- a/include/stddef.h
++++ b/include/stddef.h
+@@ -19,4 +19,9 @@
+ #define offsetof(type, member) ((size_t)( (char *)&(((type *)0)->member) - (char *)0 ))
+ #endif
+ 
++typedef struct {
++      long long __max_align_ll __attribute__((__aligned__(__alignof__(long long))));
++        long double __max_align_ld __attribute__((__aligned__(__alignof__(long double))));
++} max_align_t;
++
+ #endif
+-- 
+1.7.10.4
+
