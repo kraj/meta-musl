@@ -1,0 +1,23 @@
+This is backport of
+http://rt.openssl.org/Ticket/Display.html?id=3123&user=guest&pass=guest
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+Index: openssl-1.0.1e/crypto/ui/ui_openssl.c
+===================================================================
+--- openssl-1.0.1e.orig/crypto/ui/ui_openssl.c	2013-02-11 07:26:04.000000000 -0800
++++ openssl-1.0.1e/crypto/ui/ui_openssl.c	2014-03-26 02:42:27.459368774 -0700
+@@ -190,9 +190,9 @@
+ # undef  SGTTY
+ #endif
+ 
+-#if defined(linux) && !defined(TERMIO)
+-# undef  TERMIOS
+-# define TERMIO
++#if defined(linux)
++# define TERMIOS
++# undef  TERMIO
+ # undef  SGTTY
+ #endif
+ 
