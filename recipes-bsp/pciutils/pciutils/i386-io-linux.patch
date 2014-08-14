@@ -1,0 +1,21 @@
+asm/io.h does not exist on musl
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
+
+Index: pciutils-3.2.1/lib/i386-io-linux.h
+===================================================================
+--- pciutils-3.2.1.orig/lib/i386-io-linux.h	2011-01-07 13:04:28.000000000 -0800
++++ pciutils-3.2.1/lib/i386-io-linux.h	2014-04-27 03:31:36.605395307 -0700
+@@ -6,11 +6,7 @@
+  *	Can be freely distributed and used under the terms of the GNU GPL.
+  */
+ 
+-#ifdef __GLIBC__
+ #include <sys/io.h>
+-#else
+-#include <asm/io.h>
+-#endif
+ 
+ static int
+ intel_setup_io(struct pci_access *a UNUSED)
