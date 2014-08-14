@@ -1,0 +1,39 @@
+usage of strndupa is neither C99 nor POSIX,
+so musl libc does not implement it.
+it's a glibc invention, and a dangerous one since
+usage of alloca() is considered bad practice.
+
+fixes build with musl libc.
+
+Signed-off-by: John Spencer <maillist-k...@barfooze.de>
+Upstream-Status: Pending
+
+---
+ libkmod/libkmod-util.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+Index: git/libkmod/libkmod-util.c
+===================================================================
+--- git.orig/libkmod/libkmod-util.c	2014-03-26 00:45:58.000000000 -0700
++++ git/libkmod/libkmod-util.c	2014-03-26 02:51:12.122704760 -0700
+@@ -28,6 +28,7 @@
+ #include <unistd.h>
+ #include <errno.h>
+ #include <string.h>
++#include <limits.h>
+ #include <ctype.h>
+ 
+ #include "libkmod.h"
+@@ -334,7 +335,11 @@
+ {
+ 	char *start, *end;
+ 
+-	start = strndupa(path, len);
++	char buf[PATH_MAX+1];
++	snprintf(buf, sizeof buf, "%s", path);
++	assert(len < sizeof(buf));
++	buf[len] = 0;
++	start = buf;
+ 	end = start + len;
+ 
+ 	/*
