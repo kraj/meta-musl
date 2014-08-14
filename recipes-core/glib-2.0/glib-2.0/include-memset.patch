@@ -1,0 +1,19 @@
+musl does not indirectly include string.h like uclibc or glibc
+as a result we see warning about memset being not declared, which
+should come from string.h so lets include it
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+Index: glib-2.38.2/gio/gnetworkmonitornetlink.c
+===================================================================
+--- glib-2.38.2.orig/gio/gnetworkmonitornetlink.c	2013-11-11 21:30:22.000000000 -0800
++++ glib-2.38.2/gio/gnetworkmonitornetlink.c	2014-04-02 01:26:19.988784042 -0700
+@@ -22,6 +22,7 @@
+ 
+ #include <errno.h>
+ #include <unistd.h>
++#include <string.h>
+ 
+ #include "gnetworkmonitornetlink.h"
+ #include "gcredentials.h"
