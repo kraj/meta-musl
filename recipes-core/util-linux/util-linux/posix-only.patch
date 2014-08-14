@@ -1,0 +1,44 @@
+patch taken from sabotage linux -- https://github.com/rofl0r/sabotage
+
+Upstream-Status: Unknown
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+
+Index: util-linux-2.24.2/include/ttyutils.h
+===================================================================
+--- util-linux-2.24.2.orig/include/ttyutils.h	2014-04-24 00:37:04.000000000 -0700
++++ util-linux-2.24.2/include/ttyutils.h	2014-04-30 21:59:32.783703289 -0700
+@@ -10,6 +10,7 @@
+ #include <stdlib.h>
+ #include <termios.h>
+ #include <limits.h>
++#include <sys/ttydefaults.h>
+ #ifdef HAVE_SYS_IOCTL_H
+ #include <sys/ioctl.h>
+ #endif
+Index: util-linux-2.24.2/text-utils/hexdump.h
+===================================================================
+--- util-linux-2.24.2.orig/text-utils/hexdump.h	2014-04-24 00:37:04.000000000 -0700
++++ util-linux-2.24.2/text-utils/hexdump.h	2014-04-30 21:59:32.783703289 -0700
+@@ -32,7 +32,7 @@
+  *
+  *	@(#)hexdump.h	5.4 (Berkeley) 6/1/90
+  */
+-
++#include <sys/types.h>
+ typedef struct _pr {
+ 	struct _pr *nextpr;		/* next print unit */
+ #define	F_ADDRESS	0x001		/* print offset */
+Index: util-linux-2.24.2/text-utils/pg.c
+===================================================================
+--- util-linux-2.24.2.orig/text-utils/pg.c	2014-04-24 00:37:04.000000000 -0700
++++ util-linux-2.24.2/text-utils/pg.c	2014-04-30 21:59:32.783703289 -0700
+@@ -37,7 +37,7 @@
+ #ifndef	TIOCGWINSZ
+ # include <sys/ioctl.h>
+ #endif
+-#include <sys/termios.h>
++#include <termios.h>
+ #include <fcntl.h>
+ #include <regex.h>
+ #include <stdio.h>
