@@ -25,14 +25,23 @@ BBLAYERS ?= " \
 
 # Building
 
+Below we build for qemuarm machine as an example
+
 ```shell
-$ LIBC=musl bitbake core-image-minimal
+$ MACHINE=qemuarm LIBC=musl bitbake core-image-minimal
+```
+# Running
+
+```shell
+$ runqemu qemuarm
 ```
 
 # Limitations
 
-Currently core-image-minimal is buildable/bootable for MIPS, ARM, PPC, x86, x86_64 based
-qemu machines
+Currently core-image-minimal is buildable/bootable for MIPS, ARM, PPC, x86, x86_64 
+based qemu machines
+MACHINE variable and TCLIBC variables can also be set in conf/local.conf to avoid typing it on commandline on any bitbake invocation
+
 
 # Dependencies
 
@@ -52,7 +61,7 @@ When sending single patches, please use something like:
 
 'git send-email -M -1 --to openembedded-devel@lists.openembedded.org --subject-prefix=meta-musl][PATCH'
 
-You are encouraged to fork the mirror on github https://github.com/kraj/meta-musl/
+You are encouraged to fork the mirror on [github](https://github.com/kraj/meta-musl/)
 to share your patches, this is preferred for patch sets consisting of more than 
 one patch. Other services like gitorious, repo.or.cz or self hosted setups are 
 of course accepted as well, 'git fetch <remote>' works the same on all of them.
