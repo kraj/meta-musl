@@ -33,7 +33,7 @@ $ MACHINE=qemuarm LIBC=musl bitbake core-image-minimal
 # Running
 
 ```shell
-$ runqemu qemuarm
+$ TCLIBC=musl runqemu qemuarm
 ```
 
 # Limitations
