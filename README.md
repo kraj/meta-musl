@@ -1,7 +1,7 @@
-# meta-musl ( musl C library layer)
+# musl C library layer for OpenEmbedded
 
-This layer provides [musl](http://www.musl-libc.org/) as alternative to your system
-C library for OpenEmbedded based distributions along with uclibc and eglibc/glibc
+This layer provides [musl](http://www.musl-libc.org/) as an alternative to system
+C library for OpenEmbedded based distributions along with uClibc and eglibc/glibc
 
 # Getting Started
 
@@ -55,11 +55,17 @@ branch: master
 revision: HEAD
 ```
 
+# Upstreaming
+
+## Mailing List
 Send pull requests to openembedded-devel@lists.openembedded.org with '[meta-musl]' in the subject'
 
-When sending single patches, please use something like:
+When sending single patches, please use something like
 
-'git send-email -M -1 --to openembedded-devel@lists.openembedded.org --subject-prefix=meta-musl][PATCH'
+```shell
+git send-email -M -1 --to openembedded-devel@lists.openembedded.org --subject-prefix=meta-musl][PATCH
+```
+## Forking via github
 
 You are encouraged to fork the mirror on [github](https://github.com/kraj/meta-musl/)
 to share your patches, this is preferred for patch sets consisting of more than 
@@ -68,4 +74,4 @@ of course accepted as well, 'git fetch <remote>' works the same on all of them.
 We recommend github because it is free, easy to use, has been proven to be reliable 
 and has a really good web GUI.
 
-Layer Maintainer: Khem Raj <raj.khem@gmail.com>
+Layer Maintainer: Khem Raj raj.khem@gmail.com
