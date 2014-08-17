@@ -28,7 +28,7 @@ BBLAYERS ?= " \
 Below we build for qemuarm machine as an example
 
 ```shell
-$ MACHINE=qemuarm LIBC=musl bitbake core-image-minimal
+$ MACHINE=qemuarm TCLIBC=musl bitbake core-image-minimal
 ```
 # Running
 
