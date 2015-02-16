@@ -1,0 +1,158 @@
+Index: kbd-2.0.2/src/error.c
+===================================================================
+--- /dev/null
++++ kbd-2.0.2/src/error.c
+@@ -0,0 +1,22 @@
++#include <stdio.h>
++#include <stdarg.h>
++#include "version.h"
++
++void error(int status, int errnum, const char *fmt, ...)
++{
++	va_list args;
++
++	fflush(stdout);
++	fprintf(stderr, "%s: ", progname);
++	if (fmt) {
++		va_start(args, fmt);
++		vfprintf(stderr, fmt, args);
++		va_end(args);
++	}
++	if (errnum)
++		fprintf(stderr, "%s\n", strerror(errnum));
++	else
++		fputs("\n", stderr);
++	if (status)
++		exit(status);
++}
+Index: kbd-2.0.2/src/error.h
+===================================================================
+--- /dev/null
++++ kbd-2.0.2/src/error.h
+@@ -0,0 +1,6 @@
++#ifndef KBD_ERROR_H
++#define KBD_ERROR_H
++
++void error(int, int, const char *, ...);
++
++#endif
+Index: kbd-2.0.2/src/kbdinfo.c
+===================================================================
+--- kbd-2.0.2.orig/src/kbdinfo.c
++++ kbd-2.0.2/src/kbdinfo.c
+@@ -1,6 +1,10 @@
+ #include <stdio.h>
+ #include <errno.h>
++#if defined(__GLIBC__)
+ #include <error.h>
++#else
++#include "error.h"
++#endif
+ #include <unistd.h>
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+Index: kbd-2.0.2/src/kbdrate.c
+===================================================================
+--- kbd-2.0.2.orig/src/kbdrate.c
++++ kbd-2.0.2/src/kbdrate.c
+@@ -72,6 +72,9 @@ beats rebuilding the kernel!
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <errno.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
+ #include <sys/file.h>
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+Index: kbd-2.0.2/src/libkeymap/dump.c
+===================================================================
+--- kbd-2.0.2.orig/src/libkeymap/dump.c
++++ kbd-2.0.2/src/libkeymap/dump.c
+@@ -13,6 +13,7 @@
+ #include <string.h>
+ #include <ctype.h>
+ #include <unistd.h>
++#include <sys/types.h>
+ 
+ #include "keymap.h"
+ 
+Index: kbd-2.0.2/src/libkeymap/kmap.c
+===================================================================
+--- kbd-2.0.2.orig/src/libkeymap/kmap.c
++++ kbd-2.0.2/src/libkeymap/kmap.c
+@@ -1,5 +1,6 @@
+ #include <stdlib.h>
+ #include <string.h>
++#include <sys/types.h>
+ 
+ #include "nls.h"
+ #include "kbd.h"
+Index: kbd-2.0.2/src/libkeymap/summary.c
+===================================================================
+--- kbd-2.0.2.orig/src/libkeymap/summary.c
++++ kbd-2.0.2/src/libkeymap/summary.c
+@@ -9,6 +9,7 @@
+ #include <string.h>
+ #include <errno.h>
+ #include <sys/ioctl.h>
++#include <sys/types.h>
+ 
+ #include "keymap.h"
+ 
+Index: kbd-2.0.2/src/openvt.c
+===================================================================
+--- kbd-2.0.2.orig/src/openvt.c
++++ kbd-2.0.2/src/openvt.c
+@@ -1,12 +1,15 @@
+ #include <stdio.h>
+ #include <stdarg.h>
+ #include <unistd.h>
++#include <limits.h>
+ #include <getopt.h>
+ #include <dirent.h>
+ #include <pwd.h>
+ #include <errno.h>
+ #include <sys/ioctl.h>
++#include <sys/types.h>
+ #include <sys/stat.h>
++#include <fcntl.h>
+ #include <sys/vt.h>
+ #include <sys/wait.h>
+ #include <sys/file.h>
+Index: kbd-2.0.2/src/setvtrgb.c
+===================================================================
+--- kbd-2.0.2.orig/src/setvtrgb.c
++++ kbd-2.0.2/src/setvtrgb.c
+@@ -5,7 +5,11 @@
+ #include <sys/ioctl.h>
+ #include <linux/kd.h>
+ #include <errno.h>
++#if defined(__GLIBC__)
+ #include <error.h>
++#else
++#include "error.h"
++#endif
+ #include "kbd.h"
+ #include "getfd.h"
+ #include "nls.h"
+Index: kbd-2.0.2/src/Makefile.am
+===================================================================
+--- kbd-2.0.2.orig/src/Makefile.am
++++ kbd-2.0.2/src/Makefile.am
+@@ -64,13 +64,13 @@ resizecons_SOURCES      = $(ALL_S) resiz
+ screendump_SOURCES      = $(ALL_S) screendump.c
+ setfont_SOURCES         = $(ALL_S) setfont.c mapscrn.c
+ setkeycodes_SOURCES     = $(ALL_S) setkeycodes.c
+-setvtrgb_SOURCES        = $(ALL_S) setvtrgb.c
++setvtrgb_SOURCES        = $(ALL_S) setvtrgb.c error.c
+ setlogcons_SOURCES      = $(ALL_S) setlogcons.c
+ setpalette_SOURCES      = $(ALL_S) setpalette.c
+ setvesablank_SOURCES    = $(ALL_S) setvesablank.c
+ showconsolefont_SOURCES = $(ALL_S) showconsolefont.c
+ showkey_SOURCES         = $(ALL_S) showkey.c
+-kbdinfo_SOURCES         = $(ALL_S) kbdinfo.c
++kbdinfo_SOURCES         = $(ALL_S) kbdinfo.c error.c
+ 
+ dumpkeys_SOURCES        = $(ALL_S) dumpkeys.c
+ loadkeys_SOURCES        = $(ALL_S) loadkeys.c
