@@ -4,10 +4,10 @@ Upstream-Status: Unknown
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
 
-Index: util-linux-2.24.2/include/ttyutils.h
+Index: util-linux-2.25.2/include/ttyutils.h
 ===================================================================
---- util-linux-2.24.2.orig/include/ttyutils.h	2014-04-24 00:37:04.000000000 -0700
-+++ util-linux-2.24.2/include/ttyutils.h	2014-04-30 21:59:32.783703289 -0700
+--- util-linux-2.25.2.orig/include/ttyutils.h
++++ util-linux-2.25.2/include/ttyutils.h
 @@ -10,6 +10,7 @@
  #include <stdlib.h>
  #include <termios.h>
@@ -16,23 +16,22 @@ Index: util-linux-2.24.2/include/ttyutils.h
  #ifdef HAVE_SYS_IOCTL_H
  #include <sys/ioctl.h>
  #endif
-Index: util-linux-2.24.2/text-utils/hexdump.h
+Index: util-linux-2.25.2/text-utils/hexdump.h
 ===================================================================
---- util-linux-2.24.2.orig/text-utils/hexdump.h	2014-04-24 00:37:04.000000000 -0700
-+++ util-linux-2.24.2/text-utils/hexdump.h	2014-04-30 21:59:32.783703289 -0700
-@@ -32,7 +32,7 @@
-  *
-  *	@(#)hexdump.h	5.4 (Berkeley) 6/1/90
+--- util-linux-2.25.2.orig/text-utils/hexdump.h
++++ util-linux-2.25.2/text-utils/hexdump.h
+@@ -34,6 +34,7 @@
   */
--
+ #include "c.h"
+ #include "list.h"
 +#include <sys/types.h>
- typedef struct _pr {
- 	struct _pr *nextpr;		/* next print unit */
- #define	F_ADDRESS	0x001		/* print offset */
-Index: util-linux-2.24.2/text-utils/pg.c
+ 
+ struct hexdump_clr {
+ 	struct list_head colorlist;	/* next color unit */
+Index: util-linux-2.25.2/text-utils/pg.c
 ===================================================================
---- util-linux-2.24.2.orig/text-utils/pg.c	2014-04-24 00:37:04.000000000 -0700
-+++ util-linux-2.24.2/text-utils/pg.c	2014-04-30 21:59:32.783703289 -0700
+--- util-linux-2.25.2.orig/text-utils/pg.c
++++ util-linux-2.25.2/text-utils/pg.c
 @@ -37,7 +37,7 @@
  #ifndef	TIOCGWINSZ
  # include <sys/ioctl.h>
