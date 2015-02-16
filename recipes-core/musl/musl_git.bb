@@ -3,17 +3,16 @@
 
 require musl.inc
 
-SRCREV = "d86af2a0803cace7b0f616f2a696fb3e25e9b628"
-PV = "1.1.4+git${SRCPV}"
+SRCREV = "c63c98a6067030a25a42703db1209ccbcc74803a"
+PV = "1.1.6+git${SRCPV}"
 
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
-           file://0003-stddef-Define-max_align_t.patch \
           "
 S = "${WORKDIR}/git"
 
-PROVIDES += "virtual/libc virtual/${TARGET_PREFIX}libc-for-gcc virtual/libiconv"
+PROVIDES += "virtual/libc virtual/${TARGET_PREFIX}libc-for-gcc virtual/libiconv virtual/libintl"
 
 DEPENDS = "virtual/${TARGET_PREFIX}binutils \
            virtual/${TARGET_PREFIX}gcc-initial \
