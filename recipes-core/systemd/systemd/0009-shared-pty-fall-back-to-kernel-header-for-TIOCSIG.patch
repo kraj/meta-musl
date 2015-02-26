@@ -1,0 +1,28 @@
+From 51a02d070ab6b50723b9f6f6e0fc67b4d1c9c15e Mon Sep 17 00:00:00 2001
+From: Emil Renner Berthing <systemd@esmil.dk>
+Date: Thu, 18 Sep 2014 15:24:46 +0200
+Subject: [PATCH 09/17] shared/pty: fall back to kernel header for TIOCSIG
+
+---
+ src/shared/pty.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/shared/pty.c b/src/shared/pty.c
+index fbe6295..38d546c 100644
+--- a/src/shared/pty.c
++++ b/src/shared/pty.c
+@@ -61,6 +61,11 @@
+ #include <termios.h>
+ #include <unistd.h>
+ 
++/* If sys/ioctl.h doesn't provide TIOCSIG use the kernel header */
++#ifndef TIOCSIG
++#include <asm/ioctls.h>
++#endif
++
+ #include "barrier.h"
+ #include "macro.h"
+ #include "pty.h"
+-- 
+2.1.4
+

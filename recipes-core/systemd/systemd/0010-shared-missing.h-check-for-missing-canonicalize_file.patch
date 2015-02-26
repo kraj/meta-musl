@@ -1,0 +1,46 @@
+From 58287f2f065a9a5fd83018f4c302657089c3ff1e Mon Sep 17 00:00:00 2001
+From: Emil Renner Berthing <systemd@esmil.dk>
+Date: Thu, 18 Sep 2014 15:24:48 +0200
+Subject: [PATCH 10/17] shared/missing.h: check for missing
+ canonicalize_file_name
+
+---
+ configure.ac         | 3 ++-
+ src/shared/missing.h | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 55bb7d8..27ffa76 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -329,8 +329,9 @@ LIBS="$save_LIBS"
+ 
+ AC_CHECK_FUNCS([memfd_create])
+ AC_CHECK_FUNCS([__secure_getenv secure_getenv])
+-AC_CHECK_DECLS([gettid, pivot_root, name_to_handle_at, setns, getrandom, renameat2, kcmp, LO_FLAGS_PARTSCAN],
++AC_CHECK_DECLS([gettid, pivot_root, canonicalize_file_name, name_to_handle_at, setns, getrandom, renameat2, kcmp, LO_FLAGS_PARTSCAN],
+                [], [], [[
++#include <stdlib.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+ #include <sys/mount.h>
+diff --git a/src/shared/missing.h b/src/shared/missing.h
+index 11cca04..e9ec76c 100644
+--- a/src/shared/missing.h
++++ b/src/shared/missing.h
+@@ -131,6 +131,12 @@ static inline int pivot_root(const char *new_root, const char *put_old) {
+ }
+ #endif
+ 
++#if !HAVE_DECL_CANONICALIZE_FILE_NAME
++static inline char *canonicalize_file_name(const char *path) {
++        return realpath(path, NULL);
++}
++#endif
++
+ #ifndef __NR_memfd_create
+ #  if defined __x86_64__
+ #    define __NR_memfd_create 319
+-- 
+2.1.4
+

@@ -1,0 +1,28 @@
+From 2d8814a5a5bd3082319d82e5faca19eafc6b199e Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 19 Feb 2015 16:56:26 +0000
+Subject: [PATCH 05/17] sys/stat.h is needed for mode_t
+
+Fixes
+error: unknown type name 'mode_t'
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/shared/selinux-util.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/shared/selinux-util.h b/src/shared/selinux-util.h
+index a694441..5a5eaec 100644
+--- a/src/shared/selinux-util.h
++++ b/src/shared/selinux-util.h
+@@ -22,6 +22,7 @@
+ ***/
+ 
+ #include <sys/socket.h>
++#include <sys/stat.h>
+ #include <stdio.h>
+ #include <stdbool.h>
+ 
+-- 
+2.1.4
+

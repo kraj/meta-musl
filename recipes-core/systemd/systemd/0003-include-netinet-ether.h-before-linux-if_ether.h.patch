@@ -1,0 +1,81 @@
+From 86149477a2e5038ce5a29698ad44de03a8dba0b7 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 19 Feb 2015 23:58:27 +0000
+Subject: [PATCH 03/17] include netinet/ether.h before linux/if_ether.h
+
+musl does not include OS specific defines like uclibc/glibc
+so we changed the linux kernel headers such that if userspace
+if_ether.h is included then we avoid the duplicate defines in kernel
+headers. But the logic is defeated if linux/if_ether.h is included
+before netinet/ether.h, so lets change the order
+
+usr/include/netinet/if_ether.h:96:8: error: redefinition of 'struct
+ethhdr'
+
+include wait.h for WEXITED definition
+
+src/libsystemd/sd-event/test-event.c:101:77: error: 'WEXITED' undeclared
+(first use in this function)
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/libsystemd-network/lldp-network.c | 1 +
+ src/libsystemd-network/sd-pppoe.c     | 1 +
+ src/libsystemd-network/test-lldp.c    | 2 +-
+ src/libsystemd/sd-event/test-event.c  | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/libsystemd-network/lldp-network.c b/src/libsystemd-network/lldp-network.c
+index a2bc7d5..63d4c65 100644
+--- a/src/libsystemd-network/lldp-network.c
++++ b/src/libsystemd-network/lldp-network.c
+@@ -21,6 +21,7 @@
+ ***/
+ 
+ #include <linux/filter.h>
++#include <netinet/ether.h>
+ #include <linux/if_ether.h>
+ 
+ #include "socket-util.h"
+diff --git a/src/libsystemd-network/sd-pppoe.c b/src/libsystemd-network/sd-pppoe.c
+index 4f49b79..8742f9a 100644
+--- a/src/libsystemd-network/sd-pppoe.c
++++ b/src/libsystemd-network/sd-pppoe.c
+@@ -26,6 +26,7 @@
+ #include <linux/ppp-ioctl.h>
+ #include <net/if.h>
+ #include <netinet/in.h>
++#include <netinet/ether.h>
+ #include <linux/if_pppox.h>
+ 
+ #include "sd-pppoe.h"
+diff --git a/src/libsystemd-network/test-lldp.c b/src/libsystemd-network/test-lldp.c
+index ee74ebd..3809118 100644
+--- a/src/libsystemd-network/test-lldp.c
++++ b/src/libsystemd-network/test-lldp.c
+@@ -24,9 +24,9 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/socket.h>
++#include <net/ethernet.h>
+ #include <linux/if.h>
+ #include <linux/if_ether.h>
+-#include <net/ethernet.h>
+ #include <sys/types.h>
+ #include <arpa/inet.h>
+ 
+diff --git a/src/libsystemd/sd-event/test-event.c b/src/libsystemd/sd-event/test-event.c
+index 721700b..c778695 100644
+--- a/src/libsystemd/sd-event/test-event.c
++++ b/src/libsystemd/sd-event/test-event.c
+@@ -19,6 +19,7 @@
+   along with systemd; If not, see <http://www.gnu.org/licenses/>.
+ ***/
+ 
++#include <wait.h>
+ #include "sd-event.h"
+ #include "log.h"
+ #include "util.h"
+-- 
+2.1.4
+
