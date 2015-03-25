@@ -3,8 +3,8 @@
 
 require musl.inc
 
-SRCREV = "c63c98a6067030a25a42703db1209ccbcc74803a"
-PV = "1.1.6+git${SRCPV}"
+SRCREV = "32dee9b9b1e557a73cc4427455cd00cb2571436c"
+PV = "1.1.7+git${SRCPV}"
 
 # mirror is at git://github.com/bminor/musl.git
 
