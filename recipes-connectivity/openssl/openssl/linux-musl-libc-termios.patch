@@ -1,23 +1,19 @@
-This is backport of
-http://rt.openssl.org/Ticket/Display.html?id=3123&user=guest&pass=guest
+http://git.alpinelinux.org/cgit/aports/tree/main/openssl/0003-use-termios.patch
 
 Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
-Index: openssl-1.0.1e/crypto/ui/ui_openssl.c
+Index: openssl-1.0.2a/crypto/ui/ui_openssl.c
 ===================================================================
---- openssl-1.0.1e.orig/crypto/ui/ui_openssl.c	2013-02-11 07:26:04.000000000 -0800
-+++ openssl-1.0.1e/crypto/ui/ui_openssl.c	2014-03-26 02:42:27.459368774 -0700
-@@ -190,9 +190,9 @@
- # undef  SGTTY
+--- openssl-1.0.2a.orig/crypto/ui/ui_openssl.c
++++ openssl-1.0.2a/crypto/ui/ui_openssl.c
+@@ -218,6 +218,9 @@
+ 
  #endif
  
--#if defined(linux) && !defined(TERMIO)
--# undef  TERMIOS
--# define TERMIO
-+#if defined(linux)
-+# define TERMIOS
-+# undef  TERMIO
- # undef  SGTTY
- #endif
- 
++#define TERMIOS
++#undef TERMIO
++
+ #ifdef TERMIOS
+ # include <termios.h>
+ # define TTY_STRUCT             struct termios
