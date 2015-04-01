@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/gcc-4.9:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/gcc-${PV}:"
 
 SRC_URI += "\
            file://1000-libstdc-musl.patch \
