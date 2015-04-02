@@ -1,0 +1,43 @@
+patch taken from sabotage linux -- https://github.com/rofl0r/sabotage
+
+Upstream-Status: Unknown
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+
+Index: util-linux-2.25.2/include/ttyutils.h
+===================================================================
+--- util-linux-2.25.2.orig/include/ttyutils.h
++++ util-linux-2.25.2/include/ttyutils.h
+@@ -10,6 +10,7 @@
+ #include <stdlib.h>
+ #include <termios.h>
+ #include <limits.h>
++#include <sys/ttydefaults.h>
+ #ifdef HAVE_SYS_IOCTL_H
+ #include <sys/ioctl.h>
+ #endif
+Index: util-linux-2.25.2/text-utils/hexdump.h
+===================================================================
+--- util-linux-2.25.2.orig/text-utils/hexdump.h
++++ util-linux-2.25.2/text-utils/hexdump.h
+@@ -34,6 +34,7 @@
+  */
+ #include "c.h"
+ #include "list.h"
++#include <sys/types.h>
+ 
+ struct hexdump_clr {
+ 	struct list_head colorlist;	/* next color unit */
+Index: util-linux-2.25.2/text-utils/pg.c
+===================================================================
+--- util-linux-2.25.2.orig/text-utils/pg.c
++++ util-linux-2.25.2/text-utils/pg.c
+@@ -37,7 +37,7 @@
+ #ifndef	TIOCGWINSZ
+ # include <sys/ioctl.h>
+ #endif
+-#include <sys/termios.h>
++#include <termios.h>
+ #include <fcntl.h>
+ #include <regex.h>
+ #include <stdio.h>
