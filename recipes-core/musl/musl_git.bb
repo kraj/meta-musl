@@ -30,10 +30,13 @@ do_compile() {
 
 do_install() {
 	oe_runmake install DESTDIR='${D}'
+
+	install -d ${D}${bindir}
+	ln -s ${libdir}/libc.so ${D}${bindir}/ldd
 }
 
 RDEPENDS_${PN}-dev = "linux-libc-headers-dev"
 RPROVIDES_${PN}-dev += "libc-dev virtual-libc-dev"
-RPROVIDES_${PN} += "libsegfault rtld(GNU_HASH)"
+RPROVIDES_${PN} += "ldd libsegfault rtld(GNU_HASH)"
 
 LEAD_SONAME = "libc.so"
