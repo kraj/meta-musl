@@ -29,6 +29,9 @@ Below we build for qemuarm machine as an example
 
 ```shell
 $ MACHINE=qemuarm TCLIBC=musl bitbake core-image-minimal
+$ MACHINE=qemux86 TCLIBC=musl bitbake core-image-weston
+$ MACHINE=qemux86 TCLIBC=musl bitbake core-image-sato
+
 ```
 # Running
 
@@ -38,10 +41,11 @@ $ TCLIBC=musl runqemu qemuarm
 
 # Limitations
 
-Currently core-image-minimal is buildable/bootable for MIPS, ARM, PPC, x86, x86_64 
-based qemu machines
-MACHINE variable and TCLIBC variables can also be set in conf/local.conf to avoid typing it on commandline on any bitbake invocation
+Only works with OE-Core >= 1.9
 
+Currently core-image-minimal is buildable/bootable for MIPS, ARM, PPC, x86, x86_64 
+based qemu machines, core-image-sato and core-image-weston boots with qemux86
+MACHINE variable and TCLIBC variables can also be set in conf/local.conf to avoid typing it on commandline on any bitbake invocation
 
 # Dependencies
 
