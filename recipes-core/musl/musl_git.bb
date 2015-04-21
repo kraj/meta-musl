@@ -20,6 +20,9 @@ DEPENDS = "virtual/${TARGET_PREFIX}binutils \
            virtual/${TARGET_PREFIX}gcc-initial \
            libgcc-initial \
           "
+
+export CROSS_COMPILE="${TARGET_PREFIX}"
+
 LDFLAGS += "-Wl,-soname,libc.so"
 
 CONFIGUREOPTS = " \
