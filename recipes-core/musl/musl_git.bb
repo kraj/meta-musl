@@ -22,8 +22,17 @@ DEPENDS = "virtual/${TARGET_PREFIX}binutils \
           "
 LDFLAGS += "-Wl,-soname,libc.so"
 
+CONFIGUREOPTS = " \
+    --prefix=${prefix} \
+    --exec-prefix=${exec_prefix} \
+    --bindir=${bindir} \
+    --libdir=${libdir} \
+    --includedir=${includedir} \
+    --syslibdir=${base_libdir} \
+"
+
 do_configure() {
-	${S}/configure
+	${S}/configure ${CONFIGUREOPTS}
 }
 
 do_compile() {
