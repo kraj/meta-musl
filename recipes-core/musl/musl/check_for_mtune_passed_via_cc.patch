@@ -1,0 +1,38 @@
+From aab814687b0fb1b6d864faa25e5f956e47c22ad6 Mon Sep 17 00:00:00 2001
+From: Andre McCurdy <armccurdy@gmail.com>
+Date: Mon, 20 Apr 2015 19:23:36 -0700
+Subject: [PATCH] configure: check for -march and -mtune passed via CC
+
+OE passes -march and -mtune via CC, so update configure to check both
+CC and CFLAGS before falling back to default -march and -mtune options
+for x86.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andre McCurdy <armccurdy@gmail.com>
+---
+ configure | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 7304b13..5882cb5 100755
+--- a/configure
++++ b/configure
+@@ -379,10 +379,12 @@ tryflag CFLAGS_AUTO -Wa,--noexecstack
+ # extensions enabled by default. This is bad for making static binaries.
+ # We cheat and use i486 rather than i386 because i386 really does not
+ # work anyway (issues with atomic ops).
++# Some build environments pass -march / -mtune options via CC, so check
++# both CC and CFLAGS.
+ #
+ if test "$ARCH" = "i386" ; then
+-fnmatch '-march=*|*\ -march=*' "$CFLAGS" || tryldflag CFLAGS_AUTO -march=i486
+-fnmatch '-mtune=*|*\ -mtune=*' "$CFLAGS" || tryldflag CFLAGS_AUTO -mtune=generic
++fnmatch '-march=*|*\ -march=*' "$CC $CFLAGS" || tryldflag CFLAGS_AUTO -march=i486
++fnmatch '-mtune=*|*\ -mtune=*' "$CC $CFLAGS" || tryldflag CFLAGS_AUTO -mtune=generic
+ fi
+ 
+ #
+-- 
+1.9.1
+

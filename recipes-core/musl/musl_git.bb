@@ -9,7 +9,9 @@ PV = "1.1.8+git${SRCPV}"
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
+           file://check_for_mtune_passed_via_cc.patch \
           "
+
 S = "${WORKDIR}/git"
 
 PROVIDES += "virtual/libc virtual/${TARGET_PREFIX}libc-for-gcc virtual/libiconv virtual/libintl"
