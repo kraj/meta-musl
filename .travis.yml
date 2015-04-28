@@ -40,9 +40,9 @@ before_script:
   - git clone $(pwd) /tmp/build_env/$(basename $(pwd))
 
 script:
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemux86 bitbake -k world
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemux86-64 bitbake -k world
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuarm bitbake -k world
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuarm64 bitbake -k world
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuppc bitbake -k world
-  - source /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemumips bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemux86 bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemux86-64 bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuarm bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuarm64 bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemumips bitbake -k world
+  - PATH="/usr/sbin:/usr/bin:/sbin:/bin" . /tmp/build_env/oe-init-build-env && echo "BBLAYERS +=\"/tmp/build_env/meta-musl\"" >> $(pwd)/conf/bblayers.conf && PATH="/usr/sbin:/usr/bin:/sbin:/bin" TCLIBC=musl MACHINE=qemuppc bitbake -k world
