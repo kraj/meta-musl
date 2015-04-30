@@ -3,14 +3,12 @@
 
 require musl.inc
 
-SRCREV = "115af23942e024f78779ab29832fed3938c799e7"
+SRCREV = "85d12e02858545f8942a9c5c9f0eddc2da75edce"
 PV = "1.1.8+git${SRCPV}"
 
 # mirror is at git://github.com/bminor/musl.git
 
-SRC_URI = "git://git.musl-libc.org/musl \
-           file://check_for_mtune_passed_via_cc.patch \
-          "
+SRC_URI = "git://git.musl-libc.org/musl"
 
 S = "${WORKDIR}/git"
 
