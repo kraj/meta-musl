@@ -2,10 +2,10 @@
 # Parent 6738fd6f6fcc2a72f2ba527bda3325642af26885
 Support for arm-linux-musl.
 
-Index: gcc-4.9.0/gcc/config/arm/linux-eabi.h
+Index: gcc-4.9.2/gcc/config/arm/linux-eabi.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/arm/linux-eabi.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/arm/linux-eabi.h	2014-04-23 23:58:02.464024771 -0700
+--- gcc-4.9.2.orig/gcc/config/arm/linux-eabi.h
++++ gcc-4.9.2/gcc/config/arm/linux-eabi.h
 @@ -81,6 +81,23 @@
  #undef TARGET_FIX_V4BX_SPEC
  #define TARGET_FIX_V4BX_SPEC "%{mcpu=arm8|mcpu=arm810|mcpu=strongarm*|march=armv4: --fix-v4bx}"
@@ -30,11 +30,11 @@ Index: gcc-4.9.0/gcc/config/arm/linux-eabi.h
  /* At this point, bpabi.h will have clobbered LINK_SPEC.  We want to
     use the GNU/Linux version, not the generic BPABI version.  */
  #undef  LINK_SPEC
-Index: gcc-4.9.0/libitm/config/arm/hwcap.cc
+Index: gcc-4.9.2/libitm/config/arm/hwcap.cc
 ===================================================================
---- gcc-4.9.0.orig/libitm/config/arm/hwcap.cc	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/libitm/config/arm/hwcap.cc	2014-04-23 23:58:02.464024771 -0700
-@@ -40,7 +40,11 @@
+--- gcc-4.9.2.orig/libitm/config/arm/hwcap.cc
++++ gcc-4.9.2/libitm/config/arm/hwcap.cc
+@@ -40,7 +40,11 @@ int GTM_hwcap HIDDEN = 0
  
  #ifdef __linux__
  #include <unistd.h>
@@ -46,20 +46,20 @@ Index: gcc-4.9.0/libitm/config/arm/hwcap.cc
  #include <elf.h>
  
  static void __attribute__((constructor))
-Index: gcc-4.9.0/gcc/config/i386/linux.h
+Index: gcc-4.9.2/gcc/config/i386/linux.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/i386/linux.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/i386/linux.h	2014-04-23 23:58:02.467358104 -0700
-@@ -21,3 +21,4 @@
+--- gcc-4.9.2.orig/gcc/config/i386/linux.h
++++ gcc-4.9.2/gcc/config/i386/linux.h
+@@ -21,3 +21,4 @@ along with GCC; see the file COPYING3.
  
  #define GNU_USER_LINK_EMULATION "elf_i386"
  #define GLIBC_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-linux.so.2"
 +#define MUSL_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-musl-i386.so.1"
-Index: gcc-4.9.0/gcc/config/i386/linux64.h
+Index: gcc-4.9.2/gcc/config/i386/linux64.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/i386/linux64.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/i386/linux64.h	2014-04-23 23:58:02.467358104 -0700
-@@ -30,3 +30,8 @@
+--- gcc-4.9.2.orig/gcc/config/i386/linux64.h
++++ gcc-4.9.2/gcc/config/i386/linux64.h
+@@ -30,3 +30,8 @@ see the files COPYING3 and COPYING.RUNTI
  #define GLIBC_DYNAMIC_LINKER32 SYSTEMLIBS_DIR "ld-linux.so.2"
  #define GLIBC_DYNAMIC_LINKER64 SYSTEMLIBS_DIR "ld-linux-x86-64.so.2"
  #define GLIBC_DYNAMIC_LINKERX32 SYSTEMLIBS_DIR "ld-linux-x32.so.2"
@@ -68,22 +68,22 @@ Index: gcc-4.9.0/gcc/config/i386/linux64.h
 +#define MUSL_DYNAMIC_LINKER64 SYSTEMLIBS_DIR "ld-musl-x86_64.so.1"
 +#define MUSL_DYNAMIC_LINKERX32 SYSTEMLIBS_DIR "ld-musl-x32.so.1"
 +
-Index: gcc-4.9.0/gcc/config/mips/linux.h
+Index: gcc-4.9.2/gcc/config/mips/linux.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/mips/linux.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/mips/linux.h	2014-04-23 23:58:02.467358104 -0700
-@@ -23,3 +23,6 @@
+--- gcc-4.9.2.orig/gcc/config/mips/linux.h
++++ gcc-4.9.2/gcc/config/mips/linux.h
+@@ -23,3 +23,6 @@ along with GCC; see the file COPYING3.
  #undef UCLIBC_DYNAMIC_LINKER
  #define UCLIBC_DYNAMIC_LINKER \
    "%{mnan=2008:" SYSTEMLIBS_DIR "ld-uClibc-mipsn8.so.0;:" SYSTEMLIBS_DIR "ld-uClibc.so.0}"
 +
 +#define MUSL_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-musl-mips.so.1"
 +
-Index: gcc-4.9.0/gcc/config/mips/linux64.h
+Index: gcc-4.9.2/gcc/config/mips/linux64.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/mips/linux64.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/mips/linux64.h	2014-04-23 23:58:02.467358104 -0700
-@@ -39,6 +39,11 @@
+--- gcc-4.9.2.orig/gcc/config/mips/linux64.h
++++ gcc-4.9.2/gcc/config/mips/linux64.h
+@@ -39,6 +39,11 @@ along with GCC; see the file COPYING3.
    "%{mnan=2008:" SYSTEMLIBS_DIR "ld-uClibc-mipsn8.so.0;:" SYSTEMLIBS_DIR "ld-uClibc.so.0}"
  
  #define BIONIC_DYNAMIC_LINKERN32 "/system/bin/linker32"
@@ -96,11 +96,11 @@ Index: gcc-4.9.0/gcc/config/mips/linux64.h
    CHOOSE_DYNAMIC_LINKER (GLIBC_DYNAMIC_LINKERN32, UCLIBC_DYNAMIC_LINKERN32, \
 -			 BIONIC_DYNAMIC_LINKERN32)
 +			 BIONIC_DYNAMIC_LINKERN32, MUSL_DYNAMIC_LINKERN32)
-Index: gcc-4.9.0/gcc/config/rs6000/linux64.h
+Index: gcc-4.9.2/gcc/config/rs6000/linux64.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/rs6000/linux64.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/gcc/config/rs6000/linux64.h	2014-04-23 23:58:02.467358104 -0700
-@@ -375,17 +375,22 @@
+--- gcc-4.9.2.orig/gcc/config/rs6000/linux64.h
++++ gcc-4.9.2/gcc/config/rs6000/linux64.h
+@@ -375,17 +375,22 @@ extern int dot_symbols;
  #endif
  #define UCLIBC_DYNAMIC_LINKER32 SYSTEMLIBS_DIR "ld-uClibc.so.0"
  #define UCLIBC_DYNAMIC_LINKER64 SYSTEMLIBS_DIR "ld64-uClibc.so.0"
@@ -127,11 +127,11 @@ Index: gcc-4.9.0/gcc/config/rs6000/linux64.h
  
  #undef  DEFAULT_ASM_ENDIAN
  #if (TARGET_DEFAULT & MASK_LITTLE_ENDIAN)
-Index: gcc-4.9.0/gcc/config/rs6000/sysv4.h
+Index: gcc-4.9.2/gcc/config/rs6000/sysv4.h
 ===================================================================
---- gcc-4.9.0.orig/gcc/config/rs6000/sysv4.h	2014-04-23 23:57:54.737358103 -0700
-+++ gcc-4.9.0/gcc/config/rs6000/sysv4.h	2014-04-23 23:58:02.467358104 -0700
-@@ -768,15 +768,19 @@
+--- gcc-4.9.2.orig/gcc/config/rs6000/sysv4.h
++++ gcc-4.9.2/gcc/config/rs6000/sysv4.h
+@@ -768,15 +768,19 @@ ENDIAN_SELECT(" -mbig", " -mlittle", DEF
  
  #define GLIBC_DYNAMIC_LINKER "/lib/ld.so.1"
  #define UCLIBC_DYNAMIC_LINKER "/lib/ld-uClibc.so.0"
@@ -154,10 +154,10 @@ Index: gcc-4.9.0/gcc/config/rs6000/sysv4.h
  
  #define LINK_OS_LINUX_SPEC "-m elf32ppclinux %{!shared: %{!static: \
    %{rdynamic:-export-dynamic} \
-Index: gcc-4.9.0/libitm/config/linux/x86/tls.h
+Index: gcc-4.9.2/libitm/config/linux/x86/tls.h
 ===================================================================
---- gcc-4.9.0.orig/libitm/config/linux/x86/tls.h	2014-04-23 23:52:13.854023015 -0700
-+++ gcc-4.9.0/libitm/config/linux/x86/tls.h	2014-04-23 23:58:02.467358104 -0700
+--- gcc-4.9.2.orig/libitm/config/linux/x86/tls.h
++++ gcc-4.9.2/libitm/config/linux/x86/tls.h
 @@ -25,16 +25,19 @@
  #ifndef LIBITM_X86_TLS_H
  #define LIBITM_X86_TLS_H 1
@@ -180,10 +180,22 @@ Index: gcc-4.9.0/libitm/config/linux/x86/tls.h
  namespace GTM HIDDEN {
  
  #ifdef __x86_64__
-@@ -101,5 +104,6 @@
+@@ -101,5 +104,6 @@ static inline void set_abi_disp(struct a
  
  } // namespace GTM
  #endif /* >= GLIBC 2.10 */
 +#endif
  
  #endif // LIBITM_X86_TLS_H
+Index: gcc-4.9.2/gcc/config/aarch64/aarch64-linux.h
+===================================================================
+--- gcc-4.9.2.orig/gcc/config/aarch64/aarch64-linux.h
++++ gcc-4.9.2/gcc/config/aarch64/aarch64-linux.h
+@@ -22,6 +22,7 @@
+ #define GCC_AARCH64_LINUX_H
+ 
+ #define GLIBC_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-linux-aarch64%{mbig-endian:_be}.so.1"
++#define MUSL_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-musl-aarch64.so.1"
+ 
+ #define CPP_SPEC "%{pthread:-D_REENTRANT}"
+ 
