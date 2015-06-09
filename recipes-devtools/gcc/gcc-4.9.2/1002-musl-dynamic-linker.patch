@@ -191,11 +191,12 @@ Index: gcc-4.9.2/gcc/config/aarch64/aarch64-linux.h
 ===================================================================
 --- gcc-4.9.2.orig/gcc/config/aarch64/aarch64-linux.h
 +++ gcc-4.9.2/gcc/config/aarch64/aarch64-linux.h
-@@ -22,6 +22,7 @@
- #define GCC_AARCH64_LINUX_H
- 
- #define GLIBC_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-linux-aarch64%{mbig-endian:_be}.so.1"
-+#define MUSL_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-musl-aarch64.so.1"
+@@ -25,6 +25,8 @@
  
  #define CPP_SPEC "%{pthread:-D_REENTRANT}"
  
++#define MUSL_DYNAMIC_LINKER SYSTEMLIBS_DIR "ld-musl-aarch64.so.1"
++
+ #define LINUX_TARGET_LINK_SPEC  "%{h*}		\
+    %{static:-Bstatic}				\
+    %{shared:-shared}				\
