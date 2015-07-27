@@ -8,11 +8,11 @@ namely redefinition of some structs provided by netinet/in.h.
  generic/include/linux/libc-compat.h | 23 +++++++----------------
  1 file changed, 7 insertions(+), 16 deletions(-)
 
-Index: linux-3.19/include/uapi/linux/libc-compat.h
+Index: linux-4.1/include/uapi/linux/libc-compat.h
 ===================================================================
---- linux-3.19.orig/include/uapi/linux/libc-compat.h
-+++ linux-3.19/include/uapi/linux/libc-compat.h
-@@ -48,36 +48,27 @@
+--- linux-4.1.orig/include/uapi/linux/libc-compat.h
++++ linux-4.1/include/uapi/linux/libc-compat.h
+@@ -48,24 +48,15 @@
  #ifndef _UAPI_LIBC_COMPAT_H
  #define _UAPI_LIBC_COMPAT_H
  
@@ -40,7 +40,9 @@ Index: linux-3.19/include/uapi/linux/libc-compat.h
  #define __UAPI_DEF_SOCKADDR_IN6		0
  #define __UAPI_DEF_IPV6_MREQ		0
  #define __UAPI_DEF_IPPROTO_V6		0
- #define __UAPI_DEF_IPV6_OPTIONS		0
+@@ -73,13 +64,13 @@
+ #define __UAPI_DEF_IN6_PKTINFO		0
+ #define __UAPI_DEF_IP6_MTUINFO		0
  
 -#else
 +#else /* defined(_NETINET_IN_H) */
@@ -55,7 +57,7 @@ Index: linux-3.19/include/uapi/linux/libc-compat.h
   * coordinate. */
  #define __UAPI_DEF_IN6_ADDR_ALT		1
  #define __UAPI_DEF_SOCKADDR_IN6		1
-@@ -97,7 +88,7 @@
+@@ -101,7 +92,7 @@
  /* If we did not see any headers from any supported C libraries,
   * or we are being included in the kernel, then define everything
   * that we need. */
@@ -64,7 +66,7 @@ Index: linux-3.19/include/uapi/linux/libc-compat.h
  
  /* Definitions for in6.h */
  #define __UAPI_DEF_IN6_ADDR		1
-@@ -110,6 +101,6 @@
+@@ -116,6 +107,6 @@
  /* Definitions for xattr.h */
  #define __UAPI_DEF_XATTR		1
  
