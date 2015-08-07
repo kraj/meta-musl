@@ -3,14 +3,13 @@
 
 require musl.inc
 
-SRCREV = "e6f09004af4d3ffc4e4ad5b5d33cf45891c25f25"
+SRCREV = "c3761622e8168b0c6453637ac82e70b09af3e8e9"
 
 PV = "1.1.10+git${SRCPV}"
 
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
-           file://0001-fix-incorrect-void-return-type-for-syncfs-function.patch \
           "
 
 S = "${WORKDIR}/git"
