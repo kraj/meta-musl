@@ -10,6 +10,7 @@ PV = "1.1.10+git${SRCPV}"
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
+           file://0001-fix-incorrect-void-return-type-for-syncfs-function.patch \
           "
 
 S = "${WORKDIR}/git"
