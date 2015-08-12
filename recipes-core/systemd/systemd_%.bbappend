@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 
-SRC_URI += "\
+SRC_URI_append_libc-musl = "\
             file://0001-Define-GLOB_ALTDIRFUNC-if-not-provided.patch \
             file://0002-hwdb-don-t-use-glibc-specific-qsort_r.patch \
             file://0003-include-netinet-ether.h-before-linux-if_ether.h.patch \
@@ -20,6 +20,7 @@ SRC_URI += "\
             file://0017-sd-ipv4all-fall-back-to-random-if-no-random_r.patch \
            "
 
-EXTRA_OECONF += "--disable-selinux --disable-smack --disable-myhostname \
-                 --disable-machined --disable-sysusers --disable-tmpfiles \
-                "
+EXTRA_OECONF_append-libc-musl = "\
+            --disable-selinux --disable-smack --disable-myhostname \
+            --disable-machined --disable-sysusers --disable-tmpfiles \
+           "
