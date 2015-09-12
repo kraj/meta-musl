@@ -1,4 +1,4 @@
-From bdca63488a55e87937e41a3fe1097b59bef17740 Mon Sep 17 00:00:00 2001
+From 082408c00998cc356f131aff90c56d85c1241392 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 12 Sep 2015 08:10:36 +0000
 Subject: [PATCH] libintl.h: Add format argument attributes to gettext function
@@ -14,14 +14,14 @@ always will be string literals
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- include/libintl.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/libintl.h | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/include/libintl.h b/include/libintl.h
-index a2dada6..364e877 100644
+index a2dada6..6a707bf 100644
 --- a/include/libintl.h
 +++ b/include/libintl.h
-@@ -8,12 +8,12 @@ extern "C" {
+@@ -8,16 +8,24 @@ extern "C" {
  #define __USE_GNU_GETTEXT 1
  #define __GNU_GETTEXT_SUPPORTED_REVISION(major) ((major) == 0 ? 1 : -1)
  
@@ -31,15 +31,27 @@ index a2dada6..364e877 100644
 -char *ngettext(const char *, const char *, unsigned long);
 -char *dngettext(const char *, const char *, const char *, unsigned long);
 -char *dcngettext(const char *, const char *, const char *, unsigned long, int);
-+char *gettext(const char *) __attribute__ ((__format_arg__ (1)));
-+char *dgettext(const char *, const char *) __attribute__ ((__format_arg__ (2)));
-+char *dcgettext(const char *, const char *, int) __attribute__ ((__format_arg__ (2)));
-+char *ngettext(const char *, const char *, unsigned long) __attribute__ ((__format_arg__ (1))) __attribute__ ((__format_arg__ (2)));
-+char *dngettext(const char *, const char *, const char *, unsigned long) __attribute__ ((__format_arg__ (2))) __attribute__ ((__format_arg__ (3)));
-+char *dcngettext(const char *, const char *, const char *, unsigned long, int) __attribute__ ((__format_arg__ (2))) __attribute__ ((__format_arg__ (3)));
++#if __GNUC__ >= 3
++#define __fa(n) __attribute__ ((__format_arg__ (n)))
++#else
++#define __fa(n)
++#endif
++
++char *gettext(const char *) __fa(1);
++char *dgettext(const char *, const char *) __fa(2);
++char *dcgettext(const char *, const char *, int) __fa(2);
++char *ngettext(const char *, const char *, unsigned long) __fa(1) __fa(2);
++char *dngettext(const char *, const char *, const char *, unsigned long) __fa(2) __fa(3);
++char *dcngettext(const char *, const char *, const char *, unsigned long, int) __fa(2) __fa(3);
  char *textdomain(const char *);
  char *bindtextdomain (const char *, const char *);
  char *bind_textdomain_codeset(const char *, const char *);
+ 
++#undef __fa
++
+ #ifdef __cplusplus
+ }
+ #endif
 -- 
 2.5.2
 
