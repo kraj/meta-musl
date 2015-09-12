@@ -1,18 +1,18 @@
-From f41f93dbda705fc5f68e23d6f2f321dc972f687a Mon Sep 17 00:00:00 2001
+From ecd5d4c35ebd54c6e92d41a75b9026596a037d0a Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
 Date: Thu, 18 Sep 2014 15:24:49 +0200
-Subject: [PATCH 11/17] shared/missing.h: check for missing strndupa
+Subject: [PATCH 18/31] shared/missing.h: check for missing strndupa
 
 ---
- configure.ac         |  3 ++-
- src/shared/missing.h | 11 +++++++++++
+ configure.ac        |  3 ++-
+ src/basic/missing.h | 11 +++++++++++
  2 files changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 27ffa76..ef6a310 100644
+index 423dab1..777afe4 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -329,9 +329,10 @@ LIBS="$save_LIBS"
+@@ -306,9 +306,10 @@ AC_SUBST(CAP_LIBS)
  
  AC_CHECK_FUNCS([memfd_create])
  AC_CHECK_FUNCS([__secure_getenv secure_getenv])
@@ -24,11 +24,11 @@ index 27ffa76..ef6a310 100644
  #include <sys/types.h>
  #include <unistd.h>
  #include <sys/mount.h>
-diff --git a/src/shared/missing.h b/src/shared/missing.h
-index e9ec76c..a01cacb 100644
---- a/src/shared/missing.h
-+++ b/src/shared/missing.h
-@@ -137,6 +137,17 @@ static inline char *canonicalize_file_name(const char *path) {
+diff --git a/src/basic/missing.h b/src/basic/missing.h
+index aaf017a..5ee3b7a5 100644
+--- a/src/basic/missing.h
++++ b/src/basic/missing.h
+@@ -138,6 +138,17 @@ static inline char *canonicalize_file_name(const char *path) {
  }
  #endif
  
@@ -47,5 +47,5 @@ index e9ec76c..a01cacb 100644
  #  if defined __x86_64__
  #    define __NR_memfd_create 319
 -- 
-2.1.4
+2.5.2
 

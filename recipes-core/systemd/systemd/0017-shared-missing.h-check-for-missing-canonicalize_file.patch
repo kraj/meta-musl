@@ -1,19 +1,19 @@
-From 58287f2f065a9a5fd83018f4c302657089c3ff1e Mon Sep 17 00:00:00 2001
+From fb60d7ef8d91cac45b51609cb22d0ecf31f225fd Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
 Date: Thu, 18 Sep 2014 15:24:48 +0200
-Subject: [PATCH 10/17] shared/missing.h: check for missing
+Subject: [PATCH 17/31] shared/missing.h: check for missing
  canonicalize_file_name
 
 ---
- configure.ac         | 3 ++-
- src/shared/missing.h | 6 ++++++
+ configure.ac        | 3 ++-
+ src/basic/missing.h | 6 ++++++
  2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 55bb7d8..27ffa76 100644
+index 8ff9b97..423dab1 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -329,8 +329,9 @@ LIBS="$save_LIBS"
+@@ -306,8 +306,9 @@ AC_SUBST(CAP_LIBS)
  
  AC_CHECK_FUNCS([memfd_create])
  AC_CHECK_FUNCS([__secure_getenv secure_getenv])
@@ -24,11 +24,11 @@ index 55bb7d8..27ffa76 100644
  #include <sys/types.h>
  #include <unistd.h>
  #include <sys/mount.h>
-diff --git a/src/shared/missing.h b/src/shared/missing.h
-index 11cca04..e9ec76c 100644
---- a/src/shared/missing.h
-+++ b/src/shared/missing.h
-@@ -131,6 +131,12 @@ static inline int pivot_root(const char *new_root, const char *put_old) {
+diff --git a/src/basic/missing.h b/src/basic/missing.h
+index dc1f244..aaf017a 100644
+--- a/src/basic/missing.h
++++ b/src/basic/missing.h
+@@ -132,6 +132,12 @@ static inline int pivot_root(const char *new_root, const char *put_old) {
  }
  #endif
  
@@ -42,5 +42,5 @@ index 11cca04..e9ec76c 100644
  #  if defined __x86_64__
  #    define __NR_memfd_create 319
 -- 
-2.1.4
+2.5.2
 

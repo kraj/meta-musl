@@ -1,17 +1,17 @@
-From 51a02d070ab6b50723b9f6f6e0fc67b4d1c9c15e Mon Sep 17 00:00:00 2001
+From df5f92f6a7a220e42f98f209c6f54ca380f7e645 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
 Date: Thu, 18 Sep 2014 15:24:46 +0200
-Subject: [PATCH 09/17] shared/pty: fall back to kernel header for TIOCSIG
+Subject: [PATCH 31/31] shared/pty: fall back to kernel header for TIOCSIG
 
 ---
  src/shared/pty.c | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/src/shared/pty.c b/src/shared/pty.c
-index fbe6295..38d546c 100644
+index 35d9ff5..e2c2059 100644
 --- a/src/shared/pty.c
 +++ b/src/shared/pty.c
-@@ -61,6 +61,11 @@
+@@ -55,6 +55,11 @@
  #include <termios.h>
  #include <unistd.h>
  
@@ -22,7 +22,7 @@ index fbe6295..38d546c 100644
 +
  #include "barrier.h"
  #include "macro.h"
- #include "pty.h"
+ #include "ring.h"
 -- 
-2.1.4
+2.5.2
 

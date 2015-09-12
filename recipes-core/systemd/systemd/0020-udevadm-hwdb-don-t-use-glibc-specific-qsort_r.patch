@@ -1,17 +1,17 @@
-From 230fad8900ab995d34ad686fffe126582efe26d8 Mon Sep 17 00:00:00 2001
+From 40cf14de903c5b8de6e8bd466059d007aecf6eaf Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
 Date: Thu, 18 Sep 2014 15:24:56 +0200
-Subject: [PATCH 15/17] udevadm-hwdb: don't use glibc-specific qsort_r
+Subject: [PATCH 20/31] udevadm-hwdb: don't use glibc-specific qsort_r
 
 ---
  src/udev/udevadm-hwdb.c | 16 ++++++++++------
  1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/src/udev/udevadm-hwdb.c b/src/udev/udevadm-hwdb.c
-index d65e40c..3997e87 100644
+index 00609e3..2e1b6d6 100644
 --- a/src/udev/udevadm-hwdb.c
 +++ b/src/udev/udevadm-hwdb.c
-@@ -124,13 +124,13 @@ static void trie_node_cleanup(struct trie_node *node) {
+@@ -123,13 +123,13 @@ static void trie_node_cleanup(struct trie_node *node) {
          free(node);
  }
  
@@ -29,7 +29,7 @@ index d65e40c..3997e87 100644
  }
  
  static int trie_node_add_value(struct trie *trie, struct trie_node *node,
-@@ -151,7 +151,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
+@@ -150,7 +150,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
                          .value_off = v,
                  };
  
@@ -40,7 +40,7 @@ index d65e40c..3997e87 100644
                  if (val) {
                          /* replace existing earlier key with new value */
                          val->value_off = v;
-@@ -168,7 +170,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
+@@ -167,7 +169,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
          node->values[node->values_count].key_off = k;
          node->values[node->values_count].value_off = v;
          node->values_count++;
@@ -52,5 +52,5 @@ index d65e40c..3997e87 100644
  }
  
 -- 
-2.1.4
+2.5.2
 

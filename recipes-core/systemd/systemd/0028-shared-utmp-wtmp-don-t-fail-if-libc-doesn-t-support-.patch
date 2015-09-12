@@ -1,7 +1,7 @@
-From 732325332b59e4afe5a0ce78dcdd423f54b544af Mon Sep 17 00:00:00 2001
+From 1355580c0954c071e4a1733fa444cdf3171bf4f5 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
 Date: Thu, 18 Sep 2014 15:24:51 +0200
-Subject: [PATCH 12/17] shared/utmp-wtmp: don't fail if libc doesn't support
+Subject: [PATCH 28/31] shared/utmp-wtmp: don't fail if libc doesn't support
  utmpx/wtmpx
 
 I'd like to make utmp/wtmp handling a configure option, but for
@@ -12,10 +12,10 @@ The musl utmp/wtmp functions doesn't do anything anyway.
  1 file changed, 6 insertions(+)
 
 diff --git a/src/shared/utmp-wtmp.c b/src/shared/utmp-wtmp.c
-index bdb962a..df39ced 100644
+index 63f1e4c..5df4b11 100644
 --- a/src/shared/utmp-wtmp.c
 +++ b/src/shared/utmp-wtmp.c
-@@ -63,8 +63,10 @@ int utmp_get_runlevel(int *runlevel, int *previous) {
+@@ -64,8 +64,10 @@ int utmp_get_runlevel(int *runlevel, int *previous) {
                  return 0;
          }
  
@@ -26,7 +26,7 @@ index bdb962a..df39ced 100644
  
          setutxent();
  
-@@ -122,8 +124,10 @@ static int write_entry_utmp(const struct utmpx *store) {
+@@ -123,8 +125,10 @@ static int write_entry_utmp(const struct utmpx *store) {
           * each entry type resp. user; i.e. basically a key/value
           * table. */
  
@@ -37,7 +37,7 @@ index bdb962a..df39ced 100644
  
          setutxent();
  
-@@ -144,7 +148,9 @@ static int write_entry_wtmp(const struct utmpx *store) {
+@@ -145,7 +149,9 @@ static int write_entry_wtmp(const struct utmpx *store) {
          simply appended to the end; i.e. basically a log. */
  
          errno = 0;
@@ -48,5 +48,5 @@ index bdb962a..df39ced 100644
  }
  
 -- 
-2.1.4
+2.5.2
 

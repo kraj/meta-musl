@@ -1,7 +1,7 @@
-From 9205e301752e55d7d006e5895dc02b779bcb770b Mon Sep 17 00:00:00 2001
+From f0044093d5002357248f61150b40695b6f4a53c8 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 20 Feb 2015 00:38:44 +0000
-Subject: [PATCH 01/17] Define GLOB_ALTDIRFUNC if not provided
+Subject: [PATCH 14/31] Define GLOB_ALTDIRFUNC if not provided
 
 helps compile on musl
 
@@ -11,10 +11,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/src/tmpfiles/tmpfiles.c b/src/tmpfiles/tmpfiles.c
-index 88ba7e4..3c90fe0 100644
+index 8f29256..30956b4 100644
 --- a/src/tmpfiles/tmpfiles.c
 +++ b/src/tmpfiles/tmpfiles.c
-@@ -64,6 +64,10 @@
+@@ -63,6 +63,10 @@
   * properly owned directories beneath /tmp, /var/tmp, /run, which are
   * volatile and hence need to be recreated on bootup. */
  
@@ -26,5 +26,5 @@ index 88ba7e4..3c90fe0 100644
          /* These ones take file names */
          CREATE_FILE = 'f',
 -- 
-2.1.4
+2.5.2
 

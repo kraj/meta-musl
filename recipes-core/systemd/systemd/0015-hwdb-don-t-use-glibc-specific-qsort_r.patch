@@ -1,7 +1,7 @@
-From c730a20756fd0bda174bb72d8ab05967010cf633 Mon Sep 17 00:00:00 2001
+From 17536339a151c6affd944f7d17c1bc4420e1a427 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 20 Feb 2015 01:10:48 +0000
-Subject: [PATCH 02/17] hwdb: don't use glibc-specific qsort_r
+Subject: [PATCH 15/31] hwdb: don't use glibc-specific qsort_r
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/src/hwdb/hwdb.c b/src/hwdb/hwdb.c
-index 4539673..05faea1 100644
+index 446de3a..f844597 100644
 --- a/src/hwdb/hwdb.c
 +++ b/src/hwdb/hwdb.c
-@@ -144,13 +144,12 @@ static void trie_free(struct trie *trie) {
+@@ -142,13 +142,12 @@ static void trie_free(struct trie *trie) {
  
  DEFINE_TRIVIAL_CLEANUP_FUNC(struct trie*, trie_free);
  
@@ -30,7 +30,7 @@ index 4539673..05faea1 100644
  }
  
  static int trie_node_add_value(struct trie *trie, struct trie_node *node,
-@@ -171,7 +170,10 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
+@@ -169,7 +168,10 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
                          .value_off = v,
                  };
  
@@ -42,7 +42,7 @@ index 4539673..05faea1 100644
                  if (val) {
                          /* replace existing earlier key with new value */
                          val->value_off = v;
-@@ -188,7 +190,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
+@@ -186,7 +188,9 @@ static int trie_node_add_value(struct trie *trie, struct trie_node *node,
          node->values[node->values_count].key_off = k;
          node->values[node->values_count].value_off = v;
          node->values_count++;
@@ -54,5 +54,5 @@ index 4539673..05faea1 100644
  }
  
 -- 
-2.1.4
+2.5.2
 

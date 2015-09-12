@@ -1,39 +1,41 @@
-From d200dcec30e698669d8bca4df185d7d29ad7ed04 Mon Sep 17 00:00:00 2001
+From 9aff7c28d6a4cad8657b7570640e1d431803e308 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
-Date: Thu, 18 Sep 2014 15:24:52 +0200
-Subject: [PATCH 13/17] add fallback parse_printf_format implementation
+Date: Sat, 12 Sep 2015 19:43:33 +0000
+Subject: [PATCH 24/31] add fallback parse_printf_format implementation
 
+Signed-off-by: Emil Renner Berthing <systemd@esmil.dk>
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- Makefile.am                      |   4 +
- configure.ac                     |   2 +
- src/journal/journal-send.c       |   2 +-
- src/shared/log.c                 |   2 +-
- src/shared/parse-printf-format.c | 273 +++++++++++++++++++++++++++++++++++++++
- src/shared/parse-printf-format.h |  57 ++++++++
+ Makefile.am                     |   4 +
+ configure.ac                    |   2 +
+ src/basic/log.c                 |   2 +-
+ src/basic/parse-printf-format.c | 273 ++++++++++++++++++++++++++++++++++++++++
+ src/basic/parse-printf-format.h |  57 +++++++++
+ src/journal/journal-send.c      |   2 +-
  6 files changed, 338 insertions(+), 2 deletions(-)
- create mode 100644 src/shared/parse-printf-format.c
- create mode 100644 src/shared/parse-printf-format.h
+ create mode 100644 src/basic/parse-printf-format.c
+ create mode 100644 src/basic/parse-printf-format.h
 
 diff --git a/Makefile.am b/Makefile.am
-index 4623963..64ab291 100644
+index a416ce2..7d0a68b 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -912,6 +912,10 @@ libsystemd_shared_la_SOURCES += \
- 	src/shared/utmp-wtmp.c
- endif
+@@ -899,6 +899,10 @@ libbasic_la_SOURCES = \
+ 	src/basic/copy.c \
+ 	src/basic/copy.h
  
 +if !HAVE_PRINTF_H
-+libsystemd_shared_la_SOURCES += src/shared/parse-printf-format.c
++libbasic_la_SOURCES += src/basic/parse-printf-format.c
 +endif
 +
- nodist_libsystemd_shared_la_SOURCES = \
- 	src/shared/errno-from-name.h \
- 	src/shared/errno-to-name.h \
+ nodist_libbasic_la_SOURCES = \
+ 	src/basic/errno-from-name.h \
+ 	src/basic/errno-to-name.h \
 diff --git a/configure.ac b/configure.ac
-index ef6a310..bb84138 100644
+index 777afe4..405f1e9 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -311,6 +311,8 @@ AC_SEARCH_LIBS([dlsym], [dl], [], [AC_MSG_ERROR([*** Dynamic linking loader libr
+@@ -294,6 +294,8 @@ AC_SEARCH_LIBS([dlsym], [dl], [], [AC_MSG_ERROR([*** Dynamic linking loader libr
  AC_CHECK_HEADERS([sys/capability.h], [], [AC_MSG_ERROR([*** POSIX caps headers not found])])
  AC_CHECK_HEADERS([linux/btrfs.h], [], [])
  AC_CHECK_HEADERS([linux/memfd.h], [], [])
@@ -42,46 +44,25 @@ index ef6a310..bb84138 100644
  
  # unconditionally pull-in librt with old glibc versions
  AC_SEARCH_LIBS([clock_gettime], [rt], [], [])
-diff --git a/src/journal/journal-send.c b/src/journal/journal-send.c
-index 1e3a463..c3a7c02 100644
---- a/src/journal/journal-send.c
-+++ b/src/journal/journal-send.c
-@@ -25,12 +25,12 @@
- #include <stddef.h>
- #include <unistd.h>
- #include <fcntl.h>
--#include <printf.h>
- 
- #define SD_JOURNAL_SUPPRESS_LOCATION
- 
- #include "sd-journal.h"
- #include "util.h"
-+#include "parse-printf-format.h"
- #include "socket-util.h"
- #include "memfd-util.h"
- 
-diff --git a/src/shared/log.c b/src/shared/log.c
-index 646a1d6..3211e4f 100644
---- a/src/shared/log.c
-+++ b/src/shared/log.c
-@@ -27,11 +27,11 @@
+diff --git a/src/basic/log.c b/src/basic/log.c
+index b96afc4..6681a8d 100644
+--- a/src/basic/log.c
++++ b/src/basic/log.c
+@@ -27,8 +27,8 @@
  #include <sys/socket.h>
  #include <sys/un.h>
  #include <stddef.h>
 -#include <printf.h>
  
++#include "parse-printf-format.h"
+ #include "sd-messages.h"
  #include "log.h"
  #include "util.h"
- #include "missing.h"
-+#include "parse-printf-format.h"
- #include "macro.h"
- #include "socket-util.h"
- 
-diff --git a/src/shared/parse-printf-format.c b/src/shared/parse-printf-format.c
+diff --git a/src/basic/parse-printf-format.c b/src/basic/parse-printf-format.c
 new file mode 100644
 index 0000000..49437e5
 --- /dev/null
-+++ b/src/shared/parse-printf-format.c
++++ b/src/basic/parse-printf-format.c
 @@ -0,0 +1,273 @@
 +/*-*- Mode: C; c-basic-offset: 8; indent-tabs-mode: nil -*-*/
 +
@@ -356,11 +337,11 @@ index 0000000..49437e5
 +
 +        return last;
 +}
-diff --git a/src/shared/parse-printf-format.h b/src/shared/parse-printf-format.h
+diff --git a/src/basic/parse-printf-format.h b/src/basic/parse-printf-format.h
 new file mode 100644
 index 0000000..4371177
 --- /dev/null
-+++ b/src/shared/parse-printf-format.h
++++ b/src/basic/parse-printf-format.h
 @@ -0,0 +1,57 @@
 +/*-*- Mode: C; c-basic-offset: 8; indent-tabs-mode: nil -*-*/
 +
@@ -419,6 +400,24 @@ index 0000000..4371177
 +size_t parse_printf_format(const char *fmt, size_t n, int *types);
 +
 +#endif /* HAVE_PRINTF_H */
+diff --git a/src/journal/journal-send.c b/src/journal/journal-send.c
+index 1e3a463..c3a7c02 100644
+--- a/src/journal/journal-send.c
++++ b/src/journal/journal-send.c
+@@ -25,12 +25,12 @@
+ #include <stddef.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+-#include <printf.h>
+ 
+ #define SD_JOURNAL_SUPPRESS_LOCATION
+ 
+ #include "sd-journal.h"
+ #include "util.h"
++#include "parse-printf-format.h"
+ #include "socket-util.h"
+ #include "memfd-util.h"
+ 
 -- 
-2.1.4
+2.5.2
 

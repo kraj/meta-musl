@@ -1,7 +1,7 @@
-From 86149477a2e5038ce5a29698ad44de03a8dba0b7 Mon Sep 17 00:00:00 2001
+From 39cefed677d5084d3af206badbe9800e8817724a Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
-Date: Thu, 19 Feb 2015 23:58:27 +0000
-Subject: [PATCH 03/17] include netinet/ether.h before linux/if_ether.h
+Date: Sat, 12 Sep 2015 18:02:07 +0000
+Subject: [PATCH 16/31] include netinet/ether.h before linux/if_ether.h
 
 musl does not include OS specific defines like uclibc/glibc
 so we changed the linux kernel headers such that if userspace
@@ -21,12 +21,11 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  src/libsystemd-network/lldp-network.c | 1 +
  src/libsystemd-network/sd-pppoe.c     | 1 +
- src/libsystemd-network/test-lldp.c    | 2 +-
  src/libsystemd/sd-event/test-event.c  | 1 +
- 4 files changed, 4 insertions(+), 1 deletion(-)
+ 3 files changed, 3 insertions(+)
 
 diff --git a/src/libsystemd-network/lldp-network.c b/src/libsystemd-network/lldp-network.c
-index a2bc7d5..63d4c65 100644
+index 664d2f7..7fcbd15 100644
 --- a/src/libsystemd-network/lldp-network.c
 +++ b/src/libsystemd-network/lldp-network.c
 @@ -21,6 +21,7 @@
@@ -38,7 +37,7 @@ index a2bc7d5..63d4c65 100644
  
  #include "socket-util.h"
 diff --git a/src/libsystemd-network/sd-pppoe.c b/src/libsystemd-network/sd-pppoe.c
-index 4f49b79..8742f9a 100644
+index c6c9da8..e5e2ca6 100644
 --- a/src/libsystemd-network/sd-pppoe.c
 +++ b/src/libsystemd-network/sd-pppoe.c
 @@ -26,6 +26,7 @@
@@ -49,23 +48,8 @@ index 4f49b79..8742f9a 100644
  #include <linux/if_pppox.h>
  
  #include "sd-pppoe.h"
-diff --git a/src/libsystemd-network/test-lldp.c b/src/libsystemd-network/test-lldp.c
-index ee74ebd..3809118 100644
---- a/src/libsystemd-network/test-lldp.c
-+++ b/src/libsystemd-network/test-lldp.c
-@@ -24,9 +24,9 @@
- #include <stdlib.h>
- #include <string.h>
- #include <sys/socket.h>
-+#include <net/ethernet.h>
- #include <linux/if.h>
- #include <linux/if_ether.h>
--#include <net/ethernet.h>
- #include <sys/types.h>
- #include <arpa/inet.h>
- 
 diff --git a/src/libsystemd/sd-event/test-event.c b/src/libsystemd/sd-event/test-event.c
-index 721700b..c778695 100644
+index c092e56..e259fe3 100644
 --- a/src/libsystemd/sd-event/test-event.c
 +++ b/src/libsystemd/sd-event/test-event.c
 @@ -19,6 +19,7 @@
@@ -77,5 +61,5 @@ index 721700b..c778695 100644
  #include "log.h"
  #include "util.h"
 -- 
-2.1.4
+2.5.2
 

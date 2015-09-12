@@ -1,30 +1,32 @@
-From afc103740d895f658fe24e58d145eb0d3feb2eae Mon Sep 17 00:00:00 2001
+From c0b323eedf524c6d015887f74245349d9c292d0e Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <systemd@esmil.dk>
-Date: Thu, 18 Sep 2014 15:24:54 +0200
-Subject: [PATCH 17/17] sd-ipv4all: fall back to random if no random_r
+Date: Sat, 12 Sep 2015 20:37:35 +0000
+Subject: [PATCH 29/31] sd-ipv4all: fall back to random if no random_r
 
+Signed-off-by: Emil Renner Berthing <systemd@esmil.dk>
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  configure.ac                       |  1 +
  src/libsystemd-network/sd-ipv4ll.c | 25 +++++++++++++++++++++----
  2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/configure.ac b/configure.ac
-index bb84138..3be75a3 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -329,6 +329,7 @@ RT_LIBS="$LIBS"
- AC_SUBST(RT_LIBS)
- LIBS="$save_LIBS"
+Index: git/configure.ac
+===================================================================
+--- git.orig/configure.ac
++++ git/configure.ac
+@@ -303,6 +303,7 @@ AC_SEARCH_LIBS([cap_init], [cap], [], [A
+ CAP_LIBS="$LIBS"
+ AC_SUBST(CAP_LIBS)
  
 +AC_CHECK_FUNCS([random_r])
  AC_CHECK_FUNCS([memfd_create])
  AC_CHECK_FUNCS([__secure_getenv secure_getenv])
  AC_CHECK_DECLS([gettid, pivot_root, canonicalize_file_name, name_to_handle_at, strndupa, setns, getrandom, renameat2, kcmp, LO_FLAGS_PARTSCAN],
-diff --git a/src/libsystemd-network/sd-ipv4ll.c b/src/libsystemd-network/sd-ipv4ll.c
-index 02f2f9e..1c5693f 100644
---- a/src/libsystemd-network/sd-ipv4ll.c
-+++ b/src/libsystemd-network/sd-ipv4ll.c
-@@ -81,8 +81,10 @@ struct sd_ipv4ll {
+Index: git/src/libsystemd-network/sd-ipv4ll.c
+===================================================================
+--- git.orig/src/libsystemd-network/sd-ipv4ll.c
++++ git/src/libsystemd-network/sd-ipv4ll.c
+@@ -82,8 +82,10 @@ struct sd_ipv4ll {
          usec_t defend_window;
          int next_wakeup_valid;
          be32_t address;
@@ -35,7 +37,7 @@ index 02f2f9e..1c5693f 100644
          /* External */
          be32_t claimed_address;
          struct ether_addr mac_addr;
-@@ -141,18 +143,24 @@ static sd_ipv4ll *ipv4ll_stop(sd_ipv4ll *ll, int event) {
+@@ -142,18 +144,24 @@ static sd_ipv4ll *ipv4ll_stop(sd_ipv4ll
  
  static int ipv4ll_pick_address(sd_ipv4ll *ll, be32_t *address) {
          be32_t addr;
@@ -64,7 +66,7 @@ index 02f2f9e..1c5693f 100644
          } while (addr == ll->address ||
                  (ntohl(addr) & IPV4LL_NETMASK) != IPV4LL_NETWORK ||
                  (ntohl(addr) & 0x0000FF00) == 0x0000 ||
-@@ -481,6 +489,7 @@ int sd_ipv4ll_set_address_seed (sd_ipv4ll *ll, uint8_t seed[8]) {
+@@ -481,6 +489,7 @@ int sd_ipv4ll_set_address_seed (sd_ipv4l
  
          entropy = *seed;
  
@@ -99,7 +101,7 @@ index 02f2f9e..1c5693f 100644
  
          if (ll->address == 0) {
                  r = ipv4ll_pick_address(ll, &ll->address);
-@@ -614,8 +629,10 @@ sd_ipv4ll *sd_ipv4ll_unref(sd_ipv4ll *ll) {
+@@ -614,8 +629,10 @@ sd_ipv4ll *sd_ipv4ll_unref(sd_ipv4ll *ll
  
                  sd_ipv4ll_detach_event(ll);
  
@@ -110,6 +112,3 @@ index 02f2f9e..1c5693f 100644
                  free(ll);
  
                  return NULL;
--- 
-2.1.4
-
