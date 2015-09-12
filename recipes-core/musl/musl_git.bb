@@ -10,6 +10,7 @@ PV = "1.1.11+git${SRCPV}"
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
+           file://0001-libintl.h-Add-format-argument-attributes-to-gettext-.patch \
           "
 
 S = "${WORKDIR}/git"
