@@ -1,11 +1,11 @@
 SUMMARY = "Toybox combines common utilities together into a single executable."
 HOMEPAGE = "http://www.landley.net/toybox/"
 
-SRCREV = "e7acb4749dc655fee22d08f2723ea783f0d75fb6"
+SRCREV = "edae0b07db841e3bf8449d591971f04c9957ecbc"
 
-PV = "0.5.2+git${SRCPV}"
+PV = "0.6.0+git${SRCPV}"
 
-SRC_URI = "git://github.com/gfto/toybox \
+SRC_URI = "git://github.com/landley/toybox \
 	   "
 LICENSE = "BSD-0-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f0b8b3dd6431bcaa245da0a08bd0d511"
