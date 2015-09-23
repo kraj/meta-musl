@@ -1,0 +1,126 @@
+From ab21616ab23c3ccbb21af00553ffd05a9adbf690 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 14 Sep 2015 22:29:15 +0000
+Subject: [PATCH] net-tools: Fix build with musl
+
+Fix build errors arising with musl
+
+inet6_gr.c:27:10: fatal error: 'netinet6/ipv6_route.h' file not found
+         ^
+1 error generated.
+make[1]: *** [inet6_gr.o] Error
+ 1
+inet_sr.c:200:21: error: use of undeclared identifier 'HZ'
+            rt.rt_irtt *= (HZ / 100);   /* FIXME */
+                           ^
+1 error generated.
+
+util-ank.c:44:42: error: use of undeclared identifier 'UINT_MAX'
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ lib/inet6_gr.c | 3 ---
+ lib/inet6_sr.c | 4 ----
+ lib/inet_sr.c  | 1 +
+ lib/util-ank.c | 1 +
+ mii-tool.c     | 4 ----
+ netstat.c      | 1 +
+ slattach.c     | 1 +
+ 7 files changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/lib/inet6_gr.c b/lib/inet6_gr.c
+index 7f1bc20..203a503 100644
+--- a/lib/inet6_gr.c
++++ b/lib/inet6_gr.c
+@@ -23,9 +23,6 @@
+ #include <string.h>
+ #include <stdio.h>
+ #include <unistd.h>
+-#ifndef __GLIBC__
+-#include <netinet6/ipv6_route.h>	/* glibc doesn't have this */
+-#endif
+ #include "version.h"
+ #include "net-support.h"
+ #include "pathnames.h"
+diff --git a/lib/inet6_sr.c b/lib/inet6_sr.c
+index e8a6d7b..3f7db41 100644
+--- a/lib/inet6_sr.c
++++ b/lib/inet6_sr.c
+@@ -23,11 +23,7 @@
+ #include <string.h>
+ #include <stdio.h>
+ #include <unistd.h>
+-#ifdef __GLIBC__
+ #include <net/route.h>
+-#else
+-#include <netinet6/ipv6_route.h>	/* glibc does not have this */
+-#endif
+ #include "version.h"
+ #include "net-support.h"
+ #include "pathnames.h"
+diff --git a/lib/inet_sr.c b/lib/inet_sr.c
+index 1a876ae..9987560 100644
+--- a/lib/inet_sr.c
++++ b/lib/inet_sr.c
+@@ -10,6 +10,7 @@
+ 
+ #if HAVE_AFINET
+ #include <asm/types.h>
++#include <asm/param.h>
+ #include <sys/param.h>
+ #include <sys/types.h>
+ #include <sys/socket.h>
+diff --git a/lib/util-ank.c b/lib/util-ank.c
+index b077f35..4183196 100644
+--- a/lib/util-ank.c
++++ b/lib/util-ank.c
+@@ -15,6 +15,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <limits.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <syslog.h>
+diff --git a/mii-tool.c b/mii-tool.c
+index 39d2f3f..1ae9281 100644
+--- a/mii-tool.c
++++ b/mii-tool.c
+@@ -47,10 +47,6 @@ static char Version[] = "$Id: mii-tool.c,v 1.9 2006/09/27 20:59:18 ecki Exp $\n(
+ #include <net/if.h>
+ #include <linux/sockios.h>
+ 
+-#ifndef __GLIBC__
+-#include <linux/if_arp.h>
+-#include <linux/if_ether.h>
+-#endif
+ #include "mii.h"
+ #include "version.h"
+ 
+diff --git a/netstat.c b/netstat.c
+index 0c647cf..e244e74 100644
+--- a/netstat.c
++++ b/netstat.c
+@@ -87,6 +87,7 @@
+ #include <dirent.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
++#include <asm/param.h>
+ 
+ #include "net-support.h"
+ #include "pathnames.h"
+diff --git a/slattach.c b/slattach.c
+index 8531552..acec635 100644
+--- a/slattach.c
++++ b/slattach.c
+@@ -44,6 +44,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <getopt.h>
++#include <termios.h>
+ #include <linux/if_slip.h>
+ 
+ #if defined(__GLIBC__)
+-- 
+2.5.2
+
