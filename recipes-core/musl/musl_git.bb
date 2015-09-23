@@ -3,14 +3,13 @@
 
 require musl.inc
 
-SRCREV = "d4c82d05b8d0ee97f6356d60986799a95ed5bd74"
+SRCREV = "6c5cad2aa56745302c1d42d2c8baf6424d29c0f3"
 
 PV = "1.1.11+git${SRCPV}"
 
 # mirror is at git://github.com/bminor/musl.git
 
 SRC_URI = "git://git.musl-libc.org/musl \
-           file://0001-libintl.h-Add-format-argument-attributes-to-gettext-.patch \
           "
 
 S = "${WORKDIR}/git"
