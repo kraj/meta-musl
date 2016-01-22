@@ -7,7 +7,7 @@ C library for OpenEmbedded based distributions along with uClibc and eglibc/glib
 
 ```shell
 git clone git://github.com/openembedded/openembedded-core.git
-cd openembeeded-core
+cd openembedded-core
 git clone git://github.com/openembedded/bitbake.git
 git clone git://github.com/kraj/meta-musl.git
 
